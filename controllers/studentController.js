@@ -6,7 +6,7 @@ const headCount = async () =>
     {
       $group: {
         _id: null,
-        count: { $sum: 1}
+        headCount: { $sum: 1}
       }
     }
   ])
@@ -20,8 +20,11 @@ const grade = async (studentId) =>
       $unwind: '$assignments',
     },
     {
-      // Your code here
-    },
+      $group: {
+        _id: '$assignments',
+        grade: { $avg: "$assignments.score" }
+      }
+    }
   ]);
 
 module.exports = {
